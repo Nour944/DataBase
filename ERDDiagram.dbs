@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="VF.sql" id="Project-22e5" database="MySql" >
+	<schema name="public" >
+		<table name="Coach" spec="" >
+			<column name="CoachID" type="INT" jt="4" mandatory="y" />
+			<column name="Name" type="TEXT" jt="-1" />
+			<column name="Age" type="INT" jt="4" />
+			<column name="Specialization" type="TEXT" jt="-1" />
+			<column name="TeamID" type="INT" jt="4" />
+			<index name="pk_coach" unique="PRIMARY_KEY" >
+				<column name="CoachID" />
+			</index>
+			<fk name="fk_Coach Team" to_schema="public" to_table="Team" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+		</table>
+		<table name="Finances" spec="" >
+			<column name="FinanceID" type="INT" jt="4" mandatory="y" />
+			<column name="TeamID" type="INT" jt="4" />
+			<column name="Expenses" type="REAL" jt="8" />
+			<column name="Revenues" type="REAL" jt="8" />
+			<column name="Budget" type="REAL" jt="8" />
+			<index name="pk_finances" unique="PRIMARY_KEY" >
+				<column name="FinanceID" />
+			</index>
+			<fk name="fk_Finances Team" to_schema="public" to_table="Team" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+		</table>
+		<table name="Injury" spec="" >
+			<column name="InjuryID" type="INT" jt="4" mandatory="y" />
+			<column name="PlayerID" type="INT" jt="4" />
+			<column name="InjuryType" type="TEXT" jt="-1" />
+			<column name="Treatment" type="TEXT" jt="-1" />
+			<column name="RecoveryStatus" type="TEXT" jt="-1" />
+			<index name="pk_injury" unique="PRIMARY_KEY" >
+				<column name="InjuryID" />
+			</index>
+			<fk name="fk_Injury Player" to_schema="public" to_table="Player" options="" >
+				<fk_column name="PlayerID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="Match" spec="" >
+			<column name="MatchID" type="INT" jt="4" mandatory="y" />
+			<column name="Date" type="DATE" jt="91" />
+			<column name="Time" type="TIME" jt="92" />
+			<column name="Score" type="TEXT" jt="-1" />
+			<column name="Team1ID" type="INT" jt="4" />
+			<column name="Team2ID" type="INT" jt="4" />
+			<index name="pk_match" unique="PRIMARY_KEY" >
+				<column name="MatchID" />
+			</index>
+			<fk name="fk_Match Team" to_schema="public" to_table="Team" options="" >
+				<fk_column name="Team1ID" pk="TeamID" />
+			</fk>
+			<fk name="fk_Match Team_001" to_schema="public" to_table="Team" options="" >
+				<fk_column name="Team2ID" pk="TeamID" />
+			</fk>
+		</table>
+		<table name="Performance" spec="" >
+			<column name="PerfID" type="INT" jt="4" mandatory="y" />
+			<column name="MatchID" type="INT" jt="4" />
+			<column name="PlayerID" type="INT" jt="4" />
+			<column name="GoalsScored" type="INT" jt="4" />
+			<column name="Assists" type="INT" jt="4" />
+			<index name="pk_performance" unique="PRIMARY_KEY" >
+				<column name="PerfID" />
+			</index>
+			<fk name="fk_Performance Match" to_schema="public" to_table="Match" options="" >
+				<fk_column name="MatchID" pk="MatchID" />
+			</fk>
+			<fk name="fk_Performance Player" to_schema="public" to_table="Player" options="" >
+				<fk_column name="PlayerID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="Player" spec="" >
+			<column name="PlayerID" type="INT" jt="4" mandatory="y" />
+			<column name="Name" type="TEXT" jt="-1" />
+			<column name="Age" type="INT" jt="4" />
+			<column name="Position" type="TEXT" jt="-1" />
+			<column name="SkillLevel" type="INT" jt="4" />
+			<column name="TeamID" type="INT" jt="4" />
+			<index name="pk_player" unique="PRIMARY_KEY" >
+				<column name="PlayerID" />
+			</index>
+			<fk name="fk_Player Team" to_schema="public" to_table="Team" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+		</table>
+		<table name="PlayerStatistics" spec="" >
+			<column name="PlayerStatsID" type="INT" jt="4" mandatory="y" />
+			<column name="PlayerID" type="INT" jt="4" />
+			<column name="GoalsScored" type="INT" jt="4" />
+			<column name="Assists" type="INT" jt="4" />
+			<index name="pk_playerstatistics" unique="PRIMARY_KEY" >
+				<column name="PlayerStatsID" />
+			</index>
+			<fk name="fk_PlayerStatistics Player" to_schema="public" to_table="Player" options="" >
+				<fk_column name="PlayerID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="Team" spec="" >
+			<column name="TeamID" type="INT" jt="4" mandatory="y" />
+			<column name="TeamName" type="TEXT" jt="-1" />
+			<column name="CaptainID" type="INT" jt="4" />
+			<index name="pk_team" unique="PRIMARY_KEY" >
+				<column name="TeamID" />
+			</index>
+			<index name="unq_team_teamname" unique="UNIQUE_KEY" >
+				<column name="TeamName" />
+			</index>
+			<fk name="fk_Team Player" to_schema="public" to_table="Player" options="" >
+				<fk_column name="CaptainID" pk="PlayerID" />
+			</fk>
+		</table>
+		<table name="TeamStatistics" spec="" >
+			<column name="TeamStatsID" type="INT" jt="4" mandatory="y" />
+			<column name="TeamID" type="INT" jt="4" />
+			<column name="Wins" type="INT" jt="4" />
+			<column name="Losses" type="INT" jt="4" />
+			<column name="Draws" type="INT" jt="4" />
+			<index name="pk_teamstatistics" unique="PRIMARY_KEY" >
+				<column name="TeamStatsID" />
+			</index>
+			<fk name="fk_TeamStatistics Team" to_schema="public" to_table="Team" options="" >
+				<fk_column name="TeamID" pk="TeamID" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Layout" id="Layout-26a" show_relation="columns" >
+		<entity schema="public" name="Coach" color="3986C1" x="656" y="48" />
+		<entity schema="public" name="Finances" color="3986C1" x="800" y="240" />
+		<entity schema="public" name="Injury" color="3986C1" x="48" y="272" />
+		<entity schema="public" name="Match" color="3986C1" x="368" y="48" />
+		<entity schema="public" name="Performance" color="3986C1" x="128" y="48" />
+		<entity schema="public" name="Player" color="3986C1" x="240" y="208" />
+		<entity schema="public" name="PlayerStatistics" color="3986C1" x="272" y="400" />
+		<entity schema="public" name="Team" color="3986C1" x="592" y="256" />
+		<entity schema="public" name="TeamStatistics" color="3986C1" x="624" y="384" />
+	</layout>
+</project>
